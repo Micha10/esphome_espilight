@@ -1,0 +1,90 @@
+esphome:
+  name: myespilight
+  libraries:
+    - puuu/espilight  
+  includes: 
+    - espilightsw.h
+  #platformio_options:
+  #  lib_deps: puuu/espilight@0.17.0
+ 
+#external_components:
+#  - source: ./external_components
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+switch:
+- platform: custom
+  #name: "switch1"
+#- platform: espilightsw
+  lambda: |-
+    auto mysw1 = new EspilightComponent();
+    mysw1->set_protocol_data("{\"id\":1,\"unit\":1,\"on\":1}", "{\"id\":1,\"unit\":1,\"off\":0}");
+    mysw1->set_protocol_name("quigg_gt1000");    
+    mysw1->set_pin(19);
+    App.register_component(mysw1);
+    return {mysw1};
+  switches:
+    - name: "switch1"
+      id: mysw1
+
+- platform: custom
+  #name: "switch2"
+  lambda: |-
+    auto mysw2 = new EspilightComponent();
+    mysw2->set_protocol_data("{\"id\":5,\"unit\":1,\"on\":1}", "{\"id\":5,\"unit\":1,\"off\":0}");
+    mysw2->set_protocol_name("quigg_gt1000");    
+    mysw2->set_pin(19);
+    App.register_component(mysw2);
+    return {mysw2};
+  switches:
+    - name: "switch2"
+      id: mysw2
+
+- platform: custom
+  #name: "switch3"
+  lambda: |-
+    auto mysw3 = new EspilightComponent();
+    mysw3->set_protocol_data("{\"id\":5,\"unit\":2,\"on\":1}", "{\"id\":5,\"unit\":2,\"off\":0}");
+    mysw3->set_protocol_name("quigg_gt1000");    
+    mysw3->set_pin(19);
+    App.register_component(mysw3);
+    return {mysw3};
+  
+  switches:
+    - name: "switch3"
+      id: mysw3
+
+
+  #protocol: "quigg_gt1000"
+  #data: "{\"id\":1,\"unit\":1,\"state\":\"on\"}"
+  #pin: 19
+
+  
+    #protocol: "quigg_gt1000"
+    #data: "{\"id\":1,\"unit\":1,\"state\":\"on\"}"
+    #pin: 19
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: "secret"
+  password: "secretsecret"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Myespilight Fallback Hotspot"
+    password: "JIuJjeCzAgzE"
+
+captive_portal:
+    
